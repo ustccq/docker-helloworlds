@@ -8,17 +8,7 @@ RUN mkdir /usr/share/nginx/stream
 COPY ./stream /usr/share/nginx/stream
 
 # 在原始 nginx.conf 文件的 server 块中添加你的 location 指令
-RUN sed -i '/server {/a \
-\ \ \ \ location /stream/ {\
-\ \ \ \ \ \ \ \ alias /usr/share/nginx/stream/;\
-\ \ \ \ \ \ \ \ autoindex on;\
-\ \ \ \ \ \ \ \ types {\
-\ \ \ \ \ \ \ \ \ \ \ \ application/vnd.apple.mpegurl m3u8;\
-\ \ \ \ \ \ \ \ \ \ \ \ video/mp2t ts;\
-\ \ \ \ \ \ \ \ }\
-\ \ \ \ \ \ \ \ add_header Cache-Control no-cache;\
-\ \ \ \ \ \ \ \ add_header Access-Control-Allow-Origin *;\
-\ \ \ \ }' /etc/nginx/nginx.conf
+COPY Default.conf /etc/nginx/conf.d/default.conf
 
 # 暴露 Nginx 监听的端口
 EXPOSE 80
